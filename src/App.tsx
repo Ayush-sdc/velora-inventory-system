@@ -33,6 +33,17 @@ const CATEGORIES = [
 ]
 
 export default function App() {
+  // 1. SPLASH SCREEN STATE
+  const [isBooting, setIsBooting] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsBooting(false)
+    }, 2200)
+    return () => clearTimeout(timer)
+  }, [])
+
+  // 2. ALL OTHER APP STATES & HOOKS
   const { items, past, future, theme, updateStock, addItem, editItem, deleteItem, undo, redo, toggleTheme } = useInventoryStore()
   
   const [searchQuery, setSearchQuery] = useState('')
@@ -130,6 +141,29 @@ export default function App() {
     setIsAddModalOpen(false)
   }
 
+  // ----------------------------------------------------
+  // 3. SPLASH SCREEN RENDER
+  if (isBooting) {
+    return (
+      <div className="fixed inset-0 z-[9999] bg-zinc-950 flex flex-col items-center justify-center">
+        
+        {/* Main App Title - Pulsing smoothly */}
+        <div className="animate-pulse flex flex-col items-center">
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase">
+            Velora <span className="text-[#1DB954]">Inventory</span>
+          </h1>
+        </div>
+
+        {/* Developed By Text - Appears instantly with no delay */}
+        <p className="absolute bottom-10 text-zinc-500 text-sm tracking-[0.15em] uppercase font-medium">
+          Developed by Nexus Forge
+        </p>
+      </div>
+    );
+  }
+  // ----------------------------------------------------
+
+  // 4. MAIN APP RENDER
   return (
     <div className={theme}>
       <div className="relative min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
