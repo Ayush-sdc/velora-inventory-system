@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+/* Allow manual dark mode toggling via a .dark class */
+@variant dark (&:where(.dark, .dark *));
+
+/* Hide scrollbar for category slider but allow scrolling */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
